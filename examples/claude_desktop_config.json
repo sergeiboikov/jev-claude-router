@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "jev": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/sergeiboikov/jev-claude-router",
+        "jev-claude-router"
+      ],
+      "env": {
+        "JEV_API_KEY": "jev_..."
+      }
+    }
+  }
+}
