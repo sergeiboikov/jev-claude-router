@@ -8,7 +8,7 @@
         "jev-claude-router"
       ],
       "env": {
-        "JEV_API_KEY": "jev_..."
+        "JEV_API_KEY": "..."
       }
     }
   }
