@@ -16,21 +16,16 @@ import os
 import sys
 import urllib.request
 
-try:  # mcp 1.x
-    from mcp.server.fastmcp import FastMCP
-except ModuleNotFoundError:  # mcp 2.x renamed FastMCP to MCPServer
-    from mcp.server.mcpserver import MCPServer as FastMCP
+from mcp.server.mcpserver import MCPServer
 
 from model_router import Limits, NoModelFitsError, Router, RouterError, jev
 from model_router._http import request_json
 
 CATALOG_URL = "https://openrouter.ai/api/v1/models"
-# model_router calls jevai.org, which only takes jev_ keys; TypeSafe console keys need this API.
 TYPESAFE_URL = "https://api.typesafe.ai/v1/systemone"
 JEV_MODEL = "jev-latest"
 
-# Effort levels in the Claude model picker, lowest first. Jev chooses between these
-# descriptions the same way it chooses between models.
+# Effort levels in the Claude model picker, lowest first.
 EFFORT_LEVELS: dict[str, str] = {
     "low": "Fastest and cheapest. Short answers, lookups, formatting, simple one-step edits.",
     "medium": "Everyday work. Small features, clear bug fixes, explanations, routine refactors.",
@@ -47,13 +42,12 @@ DESKTOP_NAMES: dict[str, str] = {
     "anthropic/claude-haiku-4.5": "Claude Haiku 4.5",
 }
 
-mcp = FastMCP("jev-claude-router")
+mcp = MCPServer("jev-claude-router")
 _router: Router | None = None
 _candidates: list[str] | None = None
 
 
 def log(msg: str) -> None:
-    # stdout carries the MCP protocol, so diagnostics go to stderr (shown in the client's MCP logs)
     print(f"[jev-claude-router] {msg}", file=sys.stderr, flush=True)
 
 
@@ -101,11 +95,10 @@ def router() -> Router:
             raise RouterError("none of the configured models are in the catalog")
         _router = Router(
             jev_api_key=os.environ["JEV_API_KEY"],
-            providers=["anthropic"],  # provider name only: no Anthropic key is needed
+            providers=["anthropic"],
             models=models,
             timeout=15,
         )
-        # Keep model_router's catalog and limit checks, but ask Jev through the TypeSafe API.
         _router._choose = choose_model
     return _router
 
