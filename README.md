@@ -74,7 +74,11 @@ Use this while developing. Changes take effect after restarting the client.
 
 Add this to your project instructions, your profile preferences, or `CLAUDE.md`:
 
-> At the start of every new task, call `pick_model` with a one-line description of the task and tell me the recommended model and effort before you continue.
+```markdown
+## Model routing
+
+At the start of every new task, call `pick_model` (the `jev` MCP server, tool `mcp__jev__pick_model`) with a one-line description of the task, tell me the recommended model and effort, and then **stop and end your turn**. Do not start the task, search, or answer until I reply (I'll switch the model first).
+```
 
 ## Configuration
 
