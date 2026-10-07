@@ -113,3 +113,4 @@ JEV_API_KEY=... npx @modelcontextprotocol/inspector uv run jev-claude-router
 - If Jev can't be reached or rate-limits the call, the tool says so and makes no recommendation. It doesn't guess.
 - model-router-python is alpha. Its own Jev call goes to jevai.org, which only takes `jev_` keys, so the server replaces that call with one to TypeSafe's API and uses the library only for the catalog and limits.
 - On python.org builds of Python for macOS, run `Install Certificates.command` once (in `/Applications/Python 3.x/`), or every HTTPS call fails with `CERTIFICATE_VERIFY_FAILED`.
+- If you push some changes to GitHub, uvx may keep its cached copy until you run `uv cache clean`.
